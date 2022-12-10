@@ -151,6 +151,21 @@ public class Main {
         return lexemes;
     }
 
+    
+    
+    /*------------------------------------------------------------------
+     * PARSER RULES
+     *------------------------------------------------------------------*/
+
+//    expr : plusminus* EOF ;
+//
+//    plusminus: multdiv ( ( '+' | '-' ) multdiv )* ;
+//
+//    multdiv : factor ( ( '*' | '/' ) factor )* ;
+//
+//    factor : NUMBER | '(' expr ')' ;
+    
+    
     public static int expr(LexemeBuffer lexemes) {
         Lexeme lexeme = lexemes.next();
         if (lexeme.type == LexemeType.EOF) {
