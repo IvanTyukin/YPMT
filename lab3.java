@@ -146,7 +146,7 @@ public class Main {
 //
 //    factor : unary | NUMBER | '(' expr ')' ;
 //
-//    unary: '-' factor ;
+//    unary : '-' factor ;
     
     
     public static int expr(LexemeBuffer lexemes) {
