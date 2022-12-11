@@ -97,25 +97,6 @@ public class Main {
                     pos++;
                     continue;
                 case '-':
-//                    c = expText.charAt(++pos);
-//                    if (c <= '9' && c >= '0') {
-//                        StringBuilder sb = new StringBuilder();
-//                        sb.append('-');
-//                        do {
-//                            sb.append(c);
-//                            pos++;
-//                            if (pos >= expText.length()) {
-//                                break;
-//                            }
-//                            c = expText.charAt(pos);
-//                        } while (c <= '9' && c >= '0');
-//                        lexemes.add(new Lexeme(LexemeType.NUMBER, sb.toString()));
-//                    } else if (c == ' ') {
-//                        lexemes.add(new Lexeme(LexemeType.OP_MINUS, c));
-//                        pos++;
-//                    } else {
-//                        throw new RuntimeException("Unexpected character: " + c);
-//                    }
                     lexemes.add(new Lexeme(LexemeType.OP_MINUS, c));
                     pos++;
                     continue;
@@ -163,7 +144,9 @@ public class Main {
 //
 //    multdiv : factor ( ( '*' | '/' ) factor )* ;
 //
-//    factor : NUMBER | '(' expr ')' ;
+//    factor : unary | NUMBER | '(' expr ')' ;
+//
+//    unary: '-' factor ;
     
     
     public static int expr(LexemeBuffer lexemes) {
@@ -225,10 +208,13 @@ public class Main {
     public static int factor(LexemeBuffer lexemes) {
         Lexeme lexeme = lexemes.next();
         switch (lexeme.type) {
+            case OP_MINUS:
+                int value = factor(lexemes);
+                return -value;
             case NUMBER:
                 return Integer.parseInt(lexeme.value);
             case LEFT_BRACKET:
-                int value = plusminus(lexemes);
+                value = plusminus(lexemes);
                 lexeme = lexemes.next();
                 if (lexeme.type != LexemeType.RIGHT_BRACKET) {
                     throw new RuntimeException("Unexpected token: " + lexeme.value
